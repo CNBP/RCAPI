@@ -25,7 +25,7 @@ class CNNCNFUN_data_retrieval:
     """
 
     def __init__(
-        self, CNBPID: str or List[str], Tokens=None, URL=None,
+        self, CNBPID: str or List[str], Tokens=None, url=None,
     ):
         if Tokens is None:
             # If not specified, load from the environment.
@@ -37,15 +37,18 @@ class CNNCNFUN_data_retrieval:
                 "mother": env("REDCAP_TOKEN_CNN_MOTHER"),
                 "cnfun": env("REDCAP_TOKEN_CNFUN_PATIENT"),
             }
-        if URL is None:
-            URL = "https://redcap.cnbp.ca/api/"
+        if url is None:
+            url = "https://redcap.cnbp.ca/api/"
+
+        if url[-1] != "/":
+            url = url + "/"
 
         # Initialize the CNBPID and then create the respective projects using default credentials (without retrieving bulk of the data)
         self.CNBPIDs = CNBPID
-        self.admission_project = admission_project(Token=Tokens["admission"], URL=URL)
-        self.baby_project = baby_project(Token=Tokens["baby"], URL=URL)
-        self.mother_project = mother_project(Token=Tokens["mother"], URL=URL)
-        self.CNFUN_project = CNFUN_project(Token=Tokens["cnfun"], URL=URL)
+        self.admission_project = admission_project(Token=Tokens["admission"], URL=url)
+        self.baby_project = baby_project(Token=Tokens["baby"], URL=url)
+        self.mother_project = mother_project(Token=Tokens["mother"], URL=url)
+        self.CNFUN_project = CNFUN_project(Token=Tokens["cnfun"], URL=url)
 
         # Use CNBPID to retrieve the other two key IDs.
         self.caseIDs = self.admission_project.get_caseIDwithCNBPID(CNBPID)
@@ -123,5 +126,5 @@ class CNNCNFUN_data_retrieval:
 
 
 def test_CNNCNFUN_data_retrieval():
-    retrieval = CNNCNFUN_data_retrieval("VXS0000007")
+    retrieval = CNNCNFUN_data_retrieval("VXS0000007", url="https://redcap.cnbp.ca/api")
     retrieval.write_all_csv()
