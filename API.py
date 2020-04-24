@@ -96,18 +96,30 @@ class CNNCNFUN_data_retrieval:
         list_baby = self.get_baby_data()
         list_mother = self.get_baby_data()
         list_cnfun = self.get_CNFUN_data()
-        with open(f"CNN_admission.csv", "w") as file_case:
-            writer = csv.writer(file_case)
-            writer.writerow(list_case)
-        with open("CNN_babies.csv", "w") as file_case:
-            writer = csv.writer(file_case)
-            writer.writerow(list_baby)
-        with open("CNN_mothers.csv", "w") as file_case:
-            writer = csv.writer(file_case)
-            writer.writerow(list_mother)
-        with open("CNFUN.csv", "w") as file_case:
-            writer = csv.writer(file_case)
-            writer.writerow(list_cnfun)
+
+        self.write_out_all_records("CNN_Admission.csv", list_case)
+        self.write_out_all_records("CNN_babies.csv", list_baby)
+        self.write_out_all_records("CNN_mothers.csv", list_mother)
+        self.write_out_all_records("CNFUN.csv", list_cnfun)
+
+    def write_out_all_records(self, path_file: str, list_case):
+        # Open the file for writing.
+        with open(path_file, "a", newline="") as file_case:
+            write_header = True
+
+            # Loop through the cases from the table with relevant ID columns
+            for index, dict_case in enumerate(list_case):
+
+                # Instantiate writer for the file, per the dict keys for alignment.
+                writer = csv.DictWriter(file_case, dict_case.keys())
+
+                # Write header only for the first time.
+                if write_header:
+                    writer.writeheader()
+                    write_header = False
+
+                # Write the main data block.
+                writer.writerow(dict_case)
 
 
 def test_CNNCNFUN_data_retrieval():

@@ -2,3 +2,5 @@ environs
 pytest
 pycap
 requests
+pandas
+click

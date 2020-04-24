@@ -1,5 +1,3 @@
-from requests import post
-from DICOMTransit.redcap import development as environment
 from redcap import Project  # note this is from PyCap.redcap
 from typing import List
 
@@ -55,9 +53,7 @@ These functions serves as the basis function used to query the variety of table 
 """
 
 
-def createProject(
-    Token=environment.REDCAP_TOKEN_CNN_ADMISSION, URL="https://redcap.cnbp.ca/api/"
-):
+def createProject(    Token, URL):
     """
     Create a project using PyCap
     :param Token:
@@ -68,22 +64,6 @@ def createProject(
     # Two constants we'll use throughout
     project_admission = Project(URL, Token)
     return project_admission
-
-
-def test_Post():
-    """
-    Very simple test of regular paylaad based approach to communicate with RedCap.
-    :return:
-    """
-    # Two constants we'll use throughout
-    TOKEN = environment.REDCAP_TOKEN_CNN_ADMISSION
-    URL = "https://redcap.cnbp.ca/api/"
-
-    payload = {"token": TOKEN, "format": "json", "content": "metadata"}
-
-    response = post(URL, data=payload)
-    print(response)
-
 
 def filter_records(
     dataset: List[dict], filter_field: str, list_filtered_value: str or List[str]

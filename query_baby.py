@@ -1,6 +1,5 @@
 from typing import List
-from DICOMTransit.RCAPI.query_common import filter_records, ProjectMixins
-from DICOMTransit.redcap import development as environment
+from query_common import filter_records, ProjectMixins
 from redcap import Project  # note this is from PyCap.redcap
 
 """
@@ -17,8 +16,8 @@ class baby_project(ProjectMixins):
 
     def __init__(
         self,
-        Token=environment.REDCAP_TOKEN_CNN_BABY,
-        URL="https://redcap.cnbp.ca/api/",
+        Token,
+        URL,
         get_all_field=False,
     ):
         """

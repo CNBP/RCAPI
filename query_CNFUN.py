@@ -1,5 +1,5 @@
-from DICOMTransit.RCAPI.query_common import filter_records, ProjectMixins
-from DICOMTransit.redcap import development as environment
+import sys
+from query_common import filter_records, ProjectMixins
 from redcap import Project  # note this is from PyCap.redcap
 from typing import List
 
@@ -17,8 +17,8 @@ class CNFUN_project(ProjectMixins):
 
     def __init__(
         self,
-        Token=environment.REDCAP_TOKEN_CNFUN_PATIENT,
-        URL="https://redcap.cnbp.ca/api/",
+        Token,
+        URL,
         get_all_field=False,
     ):
         """

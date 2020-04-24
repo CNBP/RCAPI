@@ -1,4 +1,6 @@
-from DICOMTransit.redcap import development as environment
+from query_common import (
+    ProjectMixins,
+)
 from redcap import Project  # note this is from PyCap.redcap
 from typing import List
 
@@ -7,7 +9,7 @@ These functions are used to retrieve the data from the MOTHERS table clusters.
 """
 
 
-class mother_project:
+class mother_project(ProjectMixins):
     """
     One baby can have many admissions CaseIDs.
     One hospital record can have many CaseIDs.
