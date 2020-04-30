@@ -14,10 +14,7 @@ class admission_project(ProjectMixins):
     """
 
     def __init__(
-        self,
-        Token,
-        URL,
-        get_all_field=False,
+        self, Token, URL, get_all_field=False,
     ):
         """
         Create a project using PyCap
@@ -57,6 +54,9 @@ class admission_project(ProjectMixins):
         list_caseID = []
         for case in list_filtered_dict:
             list_caseID.append(case["caseid"])
+
+        if list_caseID == []:
+            raise ValueError("No case found.")
         return list_caseID
 
     def filter_with_CNBPID(self, CNBPID: str or List[str]):

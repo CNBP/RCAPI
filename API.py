@@ -10,7 +10,7 @@ from query_mother import mother_project
 from query_CNFUN import CNFUN_project
 from typing import List
 from environs import Env
-
+import os
 import csv
 
 """
@@ -51,7 +51,11 @@ class CNNCNFUN_data_retrieval:
         self.CNFUN_project = CNFUN_project(Token=Tokens["cnfun"], URL=url)
 
         # Use CNBPID to retrieve the other two key IDs.
-        self.caseIDs = self.admission_project.get_caseIDwithCNBPID(CNBPID)
+        try:
+            self.caseIDs = self.admission_project.get_caseIDwithCNBPID(CNBPID)
+        except ValueError as e:
+            print(e)
+            sys.exit(1)
         self.babyIDs = self.admission_project.get_babyIDwithCNBPID(CNBPID)
 
         # Use the babyIDs to help retrieve the two other IDs.
@@ -104,6 +108,21 @@ class CNNCNFUN_data_retrieval:
         self.write_out_all_records("CNN_babies.csv", list_baby)
         self.write_out_all_records("CNN_mothers.csv", list_mother)
         self.write_out_all_records("CNFUN.csv", list_cnfun)
+
+        from zipfile import ZipFile
+
+        zipObj = ZipFile("RetrievalResults.zip", "w")
+        zipObj.write("CNN_Admission.csv")
+        zipObj.write("CNN_babies.csv")
+        zipObj.write("CNN_mothers.csv")
+        zipObj.write("CNFUN.csv")
+        zipObj.close()
+
+        # Now the CSV files are zipped, can delete the others.
+        os.remove("CNN_Admission.csv")
+        os.remove("CNN_babies.csv")
+        os.remove("CNN_mothers.csv")
+        os.remove("CNFUN.csv")
 
     def write_out_all_records(self, path_file: str, list_case):
         # Open the file for writing.

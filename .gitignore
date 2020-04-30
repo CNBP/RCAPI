@@ -116,3 +116,6 @@ log/
 
 logs/
 *.pickle
+
+*.csv
+*.xlsx
