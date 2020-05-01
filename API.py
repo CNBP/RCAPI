@@ -111,7 +111,7 @@ class CNNCNFUN_data_retrieval:
 
         from zipfile import ZipFile
 
-        zipObj = ZipFile("RetrievalResults.zip", "w")
+        zipObj = ZipFile(f"{self.CNBPIDs}.zip", "w")
         zipObj.write("CNN_Admission.csv")
         zipObj.write("CNN_babies.csv")
         zipObj.write("CNN_mothers.csv")
