@@ -15,10 +15,7 @@ class baby_project(ProjectMixins):
     """
 
     def __init__(
-        self,
-        Token,
-        URL,
-        get_all_field=False,
+        self, Token, URL, get_all_field=False,
     ):
         """
         Create a project using PyCap

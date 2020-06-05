@@ -53,7 +53,7 @@ These functions serves as the basis function used to query the variety of table 
 """
 
 
-def createProject(    Token, URL):
+def createProject(Token, URL):
     """
     Create a project using PyCap
     :param Token:
@@ -64,6 +64,7 @@ def createProject(    Token, URL):
     # Two constants we'll use throughout
     project_admission = Project(URL, Token)
     return project_admission
+
 
 def filter_records(
     dataset: List[dict], filter_field: str, list_filtered_value: str or List[str]

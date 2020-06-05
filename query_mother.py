@@ -1,6 +1,4 @@
-from query_common import (
-    ProjectMixins,
-)
+from query_common import ProjectMixins
 from redcap import Project  # note this is from PyCap.redcap
 from typing import List
 
